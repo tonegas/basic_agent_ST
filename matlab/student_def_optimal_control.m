@@ -31,7 +31,9 @@ syms s(t) v(t) a(t) u(t) l1(t) l2(t) l3(t);
 syms opt_u;
 % Optimal solution
 % opt_u = ...
-% - use "functionalDerivative()" to derive a function with respect to another function (e.g. du = functionalDerivative(H,u)) 
+% - use "functionalDerivative()" to derive a function with respect to
+% another function (e.g. du = functionalDerivative(H,u)) in the new version
+% of matlab you can use also "diff()"
 % - Use "solve" and "subs()" to replace variable inside the equation
 
 %% Write the second optimality condition.
@@ -40,7 +42,7 @@ syms opt_u;
 % Dl2 = ...
 % Dl3 = ...
 % - Use "diff(,t)" to derive w.r.t. the time 
-%   and "functionalDerivative()" to detive w.r.t. a variable 
+%   and "functionalDerivative()" or "diff()" to detive w.r.t. a variable 
 
 %% Substitute the optimal solution opt_u to state equations
 % New system equation
@@ -49,9 +51,10 @@ syms opt_u;
 
 %% Define the Boundary condition on initial state and Boundary condition on final state
 % Boundary condition on initial and final states  
-% ICs = ... 
+% ICs = 's(0)=0, v(0)=v0, a(0)=a0' 
 % FCs = ... 
 % - Write the condition as a string
+
 
 %% Find the solution of the OCP imposing the boundary condition
 % Solution of the optimal control problem
@@ -87,14 +90,15 @@ syms t v0 a0 sf vf af T
 
 %% Create the matlab function for the solution using the coeffs
 c = sym('c',[1 6]);
-% coeffs_s_opt = ...
+% coeffs_s_opt = c(1)+1*c(2).*t+1/2*c(3).*t.^2+1/6*c(4).*t.^3+1/24*c(5).*t.^4+1/120*c(6).*t.^5;
 % coeffs_v_opt = ...
 % coeffs_a_opt = ...
 % coeffs_j_opt = ...
-% coeffs_s_opt_fun = ...
+% coeffs_s_opt_fun = matlabFunction(coeffs_s_opt, 'Vars', {t,c}, 'File','coeffs_s_opt.m');
 % coeffs_v_opt_fun = ...
 % coeffs_a_opt_fun = ...
 % coeffs_j_opt_fun = ...
+% - Complete all the other functions
 
 %% Export the coefficent list in a matlab function
 % the coeffs are moltiplied by [1,2,6,24,120] to obtain the value of c1, c2, c3, c4, c5
